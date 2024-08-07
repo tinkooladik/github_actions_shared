@@ -35,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.shared_github_token }}
 
       - name: Run action to transform metrics into table
-        uses: ./.github/actions/compose-metrics
+        uses: tinkooladik/github_actions_shared/.github/actions/compose-metrics
         id: 'transform-metrics'
         with:
           app-dir: ${{ inputs.app-dir }}
