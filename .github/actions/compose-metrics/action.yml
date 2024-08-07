@@ -1,0 +1,29 @@
+name: 'Compose metrics'
+description: 'Transform compose metrics into a table'
+
+inputs:
+  app-dir:
+    required: false
+    description: "Name of the project folder in case it's different from 'app'"
+    default: "app"
+
+outputs:
+  metrics-table:
+    description: "Table of unstable composables"
+    value: ${{ steps.transform_metrics.outputs.metrics-table }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+
+    - name: Compose Metrics
+      id: transform_metrics
+      shell: bash
+      run: |
+        chmod +x ./.github/transform_compose_metrics.sh ${{ inputs.app-dir }}
+        echo "metrics-table=$(./.github/transform_compose_metrics.sh)" >> GITHUB_OUTPUT
