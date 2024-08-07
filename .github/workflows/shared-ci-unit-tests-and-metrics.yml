@@ -2,6 +2,10 @@ name: CI - unit tests and metrics
 
 on:
   workflow_call:
+    secrets:
+      shared_github_token:
+        description: 'GitHub Token'
+        required: true
     inputs:
       app-dir:
         type: string
@@ -28,8 +32,7 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew test
         env:
-          GITHUB_ACTOR: ${{ env.GITHUB_ACTOR }}
-          GITHUB_TOKEN: ${{ secrets.RBAK_SHARED_SDK_ANDROID_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.shared_github_token }}
 
       - name: Run action to transform metrics into table
         uses: ./.github/actions/compose-metrics
