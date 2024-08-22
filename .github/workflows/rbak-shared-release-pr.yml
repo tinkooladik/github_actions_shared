@@ -44,8 +44,6 @@ jobs:
             } else {
               core.setOutput('pr_exists', 'false');
             }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get latest release version
         id: get_latest_release
@@ -163,6 +161,3 @@ jobs:
             });
 
             console.log(`Added 'needs review' label to PR #${newPr.number}`);
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#pr1
