@@ -160,3 +160,4 @@ jobs:
             });
 
             console.log(`Added 'needs review' label to PR #${newPr.number}`);
+# version 0.0.2
