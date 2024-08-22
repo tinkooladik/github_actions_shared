@@ -49,13 +49,7 @@ jobs:
               });
               latestRelease = data.tag_name;
             } catch (error) {
-              console.log('Error ${error.status}: ${error.data.message}');
-              if (error.status === 404) {
-                console.log('No releases found yet.');
                 latestRelease = null;
-              } else {
-                throw error; // Rethrow if it's not a 404 error
-              }
             }
             
             // Generate release notes
@@ -66,7 +60,7 @@ jobs:
             };
           
             // Only add previous_tag_name if latestRelease.tag_name is available
-            if (latestRelease.tag_name) {
+            if (latestRelease != null) {
               params.previous_tag_name = latestRelease;
             }
           

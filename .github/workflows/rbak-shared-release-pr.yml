@@ -61,7 +61,6 @@ jobs:
               });
               latestRelease = data.tag_name;
             } catch (error) {
-              console.log('Error ${error.status}: ${error.data.message}');
               if (error.status === 404) {
                 console.log('No releases found yet.');
                 latestRelease = 'none';
