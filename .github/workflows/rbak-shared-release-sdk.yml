@@ -59,12 +59,18 @@ jobs:
             }
             
             // Generate release notes
-            const { data: releaseNotes } = await github.rest.repos.generateReleaseNotes({
+            const params = {
               owner,
               repo,
-              tag_name: tagName,
-              previous_tag_name: latestRelease
-            });
+              tag_name: tagName
+            };
+          
+            // Only add previous_tag_name if latestRelease.tag_name is available
+            if (latestRelease.tag_name) {
+              params.previous_tag_name = latestRelease;
+            }
+          
+            const { data: releaseNotes } = await github.rest.repos.generateReleaseNotes(params);
             
             console.log(`Generated release notes: ${releaseNotes.body}`);
             core.setOutput('release_notes', releaseNotes.body);
