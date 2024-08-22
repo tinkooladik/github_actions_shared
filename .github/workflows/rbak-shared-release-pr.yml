@@ -117,6 +117,10 @@ jobs:
             const previousVersion = `${{ steps.get_latest_release.outputs.latest_tag }}`;
             const newVersion = process.env.VERSION;
             
+            let changelogRange = previousVersion != null
+              ? `${previousVersion}...${newVersion}`
+              : `${newVersion}`;
+            
             const releaseNotes = [
               `# Version ${newVersion}`,
               '',
@@ -124,7 +128,7 @@ jobs:
               '',
               mergedPrs,
               '',
-              `**Full Changelog**: https://github.com/${owner}/${repo}/compare/${previousVersion}...${newVersion}`
+              `**Full Changelog**: https://github.com/${owner}/${repo}/compare/${changelogRange}`
             ].join('\n');
             
             console.log(`Generated release notes:\n${releaseNotes}`);
