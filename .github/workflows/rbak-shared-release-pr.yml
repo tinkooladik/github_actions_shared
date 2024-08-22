@@ -54,7 +54,6 @@ jobs:
 
             let latestRelease;
             try {
-              // Fetch the latest release
               const { data } = await github.rest.repos.getLatestRelease({
                 owner,
                 repo
@@ -64,10 +63,11 @@ jobs:
               core.setOutput('latest_tag', latestRelease);
             } catch (error) {
               if (error.status === 404) {
-              console.log('No releases found yet.');
-              latestRelease = null;
-            } else {
-              throw error; // Rethrow if it's not a 404 error
+                console.log('No releases found yet.');
+                latestRelease = null;
+              } else {
+                throw error; // Rethrow if it's not a 404 error
+              }
             }
 
       - name: Find merged PRs since last release
