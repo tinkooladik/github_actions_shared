@@ -65,7 +65,7 @@ jobs:
               console.log('Error ${error.status}: ${error.data.message}');
               if (error.status === 404) {
                 console.log('No releases found yet.');
-                latestRelease = null;
+                latestRelease = 'none';
               } else {
                 throw error; // Rethrow if it's not a 404 error
               }
