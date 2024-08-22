@@ -59,8 +59,6 @@ jobs:
                 repo
               });
               latestRelease = data.tag_name;
-              console.log(`Latest release tag: ${latestRelease}`);
-              core.setOutput('latest_tag', latestRelease);
             } catch (error) {
               console.log('Error ${error.status}: ${error.data.message}');
               if (error.status === 404) {
@@ -70,6 +68,8 @@ jobs:
                 throw error; // Rethrow if it's not a 404 error
               }
             }
+            console.log('Latest release tag: ${latestRelease}');
+            core.setOutput('latest_tag', latestRelease);
 
       - name: Find merged PRs since last release
         id: merged_prs
@@ -88,7 +88,7 @@ jobs:
             });
 
             const lastReleaseTag = `${{ steps.get_latest_release.outputs.latest_tag }}`;
-            const lastRelease = lastReleaseTag === "none" ? null : await github.rest.repos.getReleaseByTag({
+            const lastRelease = lastReleaseTag === 'none' ? null : await github.rest.repos.getReleaseByTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: lastReleaseTag,
