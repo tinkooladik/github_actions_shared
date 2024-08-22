@@ -62,6 +62,7 @@ jobs:
               console.log(`Latest release tag: ${latestRelease}`);
               core.setOutput('latest_tag', latestRelease);
             } catch (error) {
+              console.log('Error ${error.status}: ${error.data.message}');
               if (error.status === 404) {
                 console.log('No releases found yet.');
                 latestRelease = null;
