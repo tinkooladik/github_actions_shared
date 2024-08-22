@@ -7,6 +7,7 @@ on:
 
 jobs:
   release-notes:
+    permissions: write-all
     runs-on: ubuntu-latest
 
     steps:
@@ -52,17 +53,23 @@ jobs:
           script: |
             const { repo, owner } = context.repo;
 
-            // Fetch the latest release
-            const { data: latestRelease } = await github.rest.repos.getLatestRelease({
-              owner,
-              repo
-            });
-
-            // Log the tag name
-            console.log(`Latest release tag: ${latestRelease.tag_name}`);
-
-            // Set the tag name as an output
-            core.setOutput('latest_tag', latestRelease.tag_name);
+            let latestRelease;
+            try {
+              const { data } = await github.rest.repos.getLatestRelease({
+                owner,
+                repo
+              });
+              latestRelease = data.tag_name;
+            } catch (error) {
+              if (error.status === 404) {
+                console.log('No releases found yet.');
+                latestRelease = 'none';
+              } else {
+                throw error; // Rethrow if it's not a 404 error
+              }
+            }
+            console.log('Latest release tag: ${latestRelease}');
+            core.setOutput('latest_tag', latestRelease);
 
       - name: Find merged PRs since last release
         id: merged_prs
@@ -81,7 +88,7 @@ jobs:
             });
 
             const lastReleaseTag = `${{ steps.get_latest_release.outputs.latest_tag }}`;
-            const lastRelease = lastReleaseTag === "none" ? null : await github.rest.repos.getReleaseByTag({
+            const lastRelease = lastReleaseTag === 'none' ? null : await github.rest.repos.getReleaseByTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: lastReleaseTag,
@@ -153,4 +160,3 @@ jobs:
             });
 
             console.log(`Added 'needs review' label to PR #${newPr.number}`);
-#pr1
