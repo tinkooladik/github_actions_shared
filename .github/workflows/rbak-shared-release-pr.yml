@@ -160,4 +160,6 @@ jobs:
             });
 
             console.log(`Added 'needs review' label to PR #${newPr.number}`);
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #pr1
