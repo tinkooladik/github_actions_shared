@@ -19,4 +19,4 @@ jobs:
           echo branch_name
 
       - name: Print "test" to logs
-        run: echo "test v1"
+        run: echo "test main"
