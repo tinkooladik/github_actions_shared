@@ -1,0 +1,22 @@
+name: Print test
+
+on:
+  workflow_call:
+
+jobs:
+  print_test:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from branch name
+        id: extract_version
+        run: |
+          branch_name=$(echo "${GITHUB_REF#refs/heads/}")
+          echo branch_name
+
+      - name: Print "test" to logs
+        run: echo "test v1"
