@@ -15,8 +15,7 @@ jobs:
       - name: Extract version from branch name
         id: extract_version
         run: |
-          branch_name=$(echo "${GITHUB_REF#refs/heads/}")
-          echo branch_name
+          echo "${GITHUB_REF#refs/heads/}"
 
       - name: Print "test" to logs
-        run: echo "test main"
+        run: echo "test test v1.2 rewrite tag"
