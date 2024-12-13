@@ -1,0 +1,6 @@
+[repos]
+tinkooladik/update-versions-test
+tinkooladik/update-versions-test-2
+
+[lib_name]
+libNameShared
