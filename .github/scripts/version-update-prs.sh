@@ -14,7 +14,8 @@ LIB_PR_URL="${LIB_PR_URL:-default_url}"
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 # Config file in the same directory as the script
-CONFIG_FILE="..$SCRIPT_DIR/config.txt"
+cd ..
+CONFIG_FILE="$SCRIPT_DIR/config.txt"
 
 # Check if config file exists
 if [[ ! -f "$CONFIG_FILE" ]]; then
