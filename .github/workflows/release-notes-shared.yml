@@ -181,7 +181,7 @@ jobs:
             console.log(`Updated PR #${prNumber}`);
 
       - name: Create update version PRs
-        run: ./scripts/version-update-prs.sh
+        run: chmod +x .github/scripts/version-update-prs.sh && ./.github/scripts/version-update-prs.sh
         env:
           VERSION: ${{ env.VERSION }}
           LIB_PR_URL: ${{ env.PR_URL }}
