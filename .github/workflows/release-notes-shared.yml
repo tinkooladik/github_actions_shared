@@ -179,8 +179,8 @@ jobs:
             
             console.log(`Updated PR #${prNumber}`);
 
-      - name: Run Bash Script
-        run: ../scripts/release-notes-shared.sh
+      - name: Create update version PRs
+        run: ../scripts/version-update-prs.sh
         env:
           VERSION: ${{ env.VERSION }}
           LIB_PR_URL: ${{ env.PR_URL }}
