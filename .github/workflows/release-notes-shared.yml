@@ -169,6 +169,7 @@ jobs:
             const { repo, owner } = context.repo;
             const branchName = process.env.BRANCH_NAME;
             const releaseNotes = `${{ steps.generate_notes.outputs.release_notes }}`;
+            const prNumber = `${{ steps.check_pr.outputs.pr_number }}`;
 
             await github.rest.pulls.update({
                 owner,
